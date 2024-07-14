@@ -1,0 +1,31 @@
+  {
+    "type": "object",
+    "properties": {
+      "leads": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "format": "string"
+            },
+            "submitted": {
+              "type": "string",
+              "format": "date"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "reached"
+              ]
+            },
+            "country": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
