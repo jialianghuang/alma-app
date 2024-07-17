@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-
+import leadReducer from './reducer';
 export const makeStore = () => {
   return configureStore({
-    reducer: {}
+    reducer: {leadReducer}
   })
 }
 

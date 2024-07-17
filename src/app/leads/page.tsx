@@ -1,18 +1,21 @@
 'use client'
 import { JsonForms } from '@jsonforms/react';
+import {
+  RankedTester,
+  rankWith,
+  formatIs
+} from '@jsonforms/core';
 import schema from './schema.json';
 import uischema from './uischema.json';
 import React from 'react'
 import Search from './search'
-import {
-    vanillaCells, vanillaRenderers
-  } from '@jsonforms/vanilla-renderers';
+
   import {
     materialCells,
     materialRenderers,
   } from '@jsonforms/material-renderers';
 import styled from 'styled-components';
-import { useAppSelector, useAppDispatch, useAppStore } from '../lib/hooks'
+
 
 const initialData = {
     "leads": [
@@ -24,6 +27,30 @@ const initialData = {
         },
         {
             "name": "david",
+            "submitted": "2024-07-02",
+            "status": "reached out",
+            "country": "CA"
+        },
+        {
+            "name": "mike",
+            "submitted": "2024-07-02",
+            "status": "pending",
+            "country": "CA"
+        },
+        {
+            "name": "leo",
+            "submitted": "2024-07-02",
+            "status": "pending",
+            "country": "CA"
+        },
+        {
+            "name": "Simon",
+            "submitted": "2024-07-02",
+            "status": "pending",
+            "country": "CA"
+        },
+        {
+            "name": "Jessica",
             "submitted": "2024-07-02",
             "status": "pending",
             "country": "CA"
@@ -43,15 +70,40 @@ const MainContent = styled.div`
     padding: 1rem;
     margin-left: 300px
 `;
-
-const renderers = [
-    ...materialRenderers,
-    //register custom renderers
-    // { tester: arrayLayoutTester, renderer: ArrayLayoutRenderer }
-  ];
+function getIdFromPath(path:string) {
+   return path.split('.')[1] ?? 0
+}
 
 export default function Leads() {
     const [data, setData] = React.useState<Object>(initialData);
+
+    const renderers = [
+      ...materialRenderers,
+      //register custom renderers
+      // { tester: StatusButtonTester, renderer: StatusButtonRenderer }
+    ];
+    const changeStatusCellTester: RankedTester = rankWith(5, formatIs('button1'));
+  const cells = [
+      ...materialCells,
+      //register custom renderers
+      { tester: changeStatusCellTester, cell: (props: any) => 
+        {
+         const { data,handleChange, path } = props
+         console.log(getIdFromPath(path))
+         const handleClick = () => {
+          setData((oldArr:any) => {
+            const updated = oldArr.leads.map((lead:any, i:number) => i === Number(getIdFromPath(path))? {...lead, status:'reached out'} : lead)
+            return {leads:updated}
+          })
+         }
+           return (
+               <button onClick = {handleClick}>
+                Change Status
+               </button>
+           )
+       } }
+    ];
+  
     return (
         <div>
         <Sidebar className='sidebar overflow-y-auto text-center'>
@@ -69,7 +121,7 @@ export default function Leads() {
         uischema={uischema}
         data={data}
         renderers={renderers}
-        cells={materialCells}
+        cells={cells}
         onChange={({ data }) => setData(data)}
       />
       </MainContent>

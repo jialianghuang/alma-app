@@ -8,7 +8,7 @@
           "properties": {
             "name": {
               "type": "string",
-              "format": "string"
+              "readOnly": true
             },
             "submitted": {
               "type": "string",
@@ -18,11 +18,15 @@
               "type": "string",
               "enum": [
                 "pending",
-                "reached"
+                "reached out"
               ]
             },
             "country": {
               "type": "string"
+            },
+            "change status": {
+              "type":"string",
+              "format": "button1"
             }
           }
         }
