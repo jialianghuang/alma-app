@@ -17,7 +17,7 @@ export default function User() {
         Submit the form below and our team of experienced attorneys will review your information and send a preliminary assessment of your case based on your goals.
         </p>
       </div>
-      <ApplicationForm />
+      <ApplicationForm/>
     </div>
     </main>
     </div>
