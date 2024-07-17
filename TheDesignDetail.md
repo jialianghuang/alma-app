@@ -21,3 +21,7 @@ make some change to the schema(add a new dummy property and use tester to
 render it as a button). It works and I think it's fine if only one field
 
 is changeable. Otherwise it's better to custom the table it rendered.
+
+For backend API it's better to use AWS S3 to host the resume and store the
+
+users information in the database.
